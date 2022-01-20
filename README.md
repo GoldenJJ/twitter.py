@@ -5,3 +5,5 @@ This is a Twitter api wrapper made in python which im making to learn so please 
 and this is my feature job so please help me out <3
 
 creator : [okimii#0434](https://discord.com/users/637458038915203127)
+
+[![Join our Discord server!](https://invidget.switchblade.xyz/4afggm3PYR)](https://discord.gg/4afggm3PYR)
