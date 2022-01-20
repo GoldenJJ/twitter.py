@@ -1,7 +1,7 @@
 import requests
 import json
 
-class Client():
+class Client:
     def __init__(self, token: str = None) -> None:
         self.token = token
         self.header = {"Authorization" : f"Bearer {self.token}"}
