@@ -54,7 +54,7 @@ class Client:
 
 
     def get_tweet(self, id: int) -> None:
-        if type(id) == str:
+        if isisntance(str):
             raise Exception("id must be an int not a string")
         try:
             resp = requests.get(f"https://api.twitter.com/2/tweets?ids={id}",
