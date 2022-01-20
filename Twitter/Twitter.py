@@ -5,6 +5,7 @@ class Client():
     def __init__(self, token: str = None) -> None:
         self.token = token
         self.header = {"Authorization" : f"Bearer {self.token}"}
+        """Client class"""
     
     def help(self):
         statuscodes = [
@@ -24,7 +25,8 @@ class Client():
             "504: Gateway Timeout"
             ]
         print("\n".join(statuscodes))
-    
+        """Help command"""
+
     def get_user(self, username: str) -> None:
         if username.startswith("@"):
             raise Exception("Must be the username only")
@@ -35,6 +37,7 @@ class Client():
             print(resp.status_code, data)
         except Exception as errorcode:
             raise errorcode
+        """Getuser command, makes a request to the twitter api for a user"""
 
     def get_users(self, *usernames: str) -> None:
         if "@" in usernames:
@@ -47,6 +50,8 @@ class Client():
             print(resp.status_code, data)
         except Exception as errorcode:
             raise errorcode
+        """Getusers command, makes a request to the twitter api for a group of users"""
+
 
     def get_tweet(self, id: int) -> None:
         if type(id) == str:
@@ -58,6 +63,7 @@ class Client():
             print(resp.status_code, data)
         except Exception as errorcode:
             raise errorcode
+        """Getuser command, makes a request to the twitter api for a tweet"""
 
     def get_tweets(self, *ids: int) -> None:
         try:
@@ -68,3 +74,4 @@ class Client():
             print(resp.status_code, data)
         except Exception as errorcode:
             raise errorcode
+        """Getusers command, makes a request to the twitter api for a group of tweets"""
