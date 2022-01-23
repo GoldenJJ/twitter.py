@@ -43,13 +43,12 @@ class Client:
         *usernames: str
         ) -> str:
         """
-        Gets a user by username.
+        Gets a user/multiple users by username.
 
         Parameters
         ----------
-        username: :class: `str`
+        usernames: :class: `str`
         """
-        # turn usernames into A list of usernames
 
         usernames = ",".join(usernames)
         usernames = usernames.split()
