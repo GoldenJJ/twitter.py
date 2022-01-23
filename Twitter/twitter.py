@@ -38,9 +38,9 @@ class Client:
             ]
         print("\n".join(status_codes))
 
-    def get_user(
+    def get_users(
         self,
-        username: str
+        *usernames: str
         ) -> str:
         """
         Gets a user by username.
@@ -49,46 +49,25 @@ class Client:
         ----------
         username: :class: `str`
         """
-        if username.startswith("@"):
-            raise Exception("Must be the username only")
+        # turn usernames into A list of usernames
 
-        try:
-            resp = requests.get(
-                f"https://api.twitter.com/2/users/by/username/{username}", 
-            headers=self.header
-            )
-            data = json.loads(resp.text)
-            return data
+        usernames = ",".join(usernames)
+        usernames = usernames.split()
+        
 
-        except Exception as errorcode:
-            raise errorcode
+        for user in usernames:
+            if user.startswith("@"):
+                user = user[1:]
+            try:
+                resp = requests.get(
+                    f"https://api.twitter.com/2/users/by/username/{user}", 
+                headers=self.header
+                )
+                data = json.loads(resp.text)
+                print(data)
 
-    def get_users(
-        self,
-        *usernames: str
-        ) -> str:
-        """
-        Gets users by usernames.
-
-        Parameters
-        ----------
-        usernames: :class: `str`
-        """
-        if "@" in usernames:
-            raise Exception("Must be the username only")
-
-        try:
-            new_ids = ",".join(usernames)
-            resp = requests.get(
-                f"https://api.twitter.com/2/users/by/username/{new_ids}", 
-            headers=self.header
-            )
-            data = json.loads(resp.text)
-            return data
-
-        except Exception as errorcode:
-            raise errorcode
-
+            except Exception as errorcode:
+                raise errorcode
 
     def get_tweet(
         self,
