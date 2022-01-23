@@ -4,13 +4,14 @@ import json
 class Client:
     def __init__(
         self,
-        token: str = None
+        token: str
         ) -> None:
         self.token = token
         self.header = {
             "Authorization" : f"Bearer {self.token}"
             }
-        """A client class that has methods to access the twitter api
+        """
+        A client class that has methods to access the twitter API.
         
         Parameters
         ----------
@@ -18,8 +19,8 @@ class Client:
             Bare token used for authorization
         """
     
-    def help(self):
-        statuscodes = [
+    def _help(self):
+        status_codes = [
             "Twitter API HTTP status codes", 
             "200: OK","304: Not Modified", 
             "400: Bad Request", 
@@ -35,56 +36,56 @@ class Client:
             "503: Service Unavailable", 
             "504: Gateway Timeout"
             ]
-        print("\n".join(statuscodes))
-        """Help command
-        gives http status codes"""
+        print("\n".join(status_codes))
 
     def get_user(
         self,
-    username: str
-    ) -> None:
-        """Gets a user by username
+        username: str
+        ) -> str:
+        """
+        Gets a user by username.
+
         Parameters
         ----------
         username: :class: `str`
         """
         if username.startswith("@"):
             raise Exception("Must be the username only")
+
         try:
             resp = requests.get(
                 f"https://api.twitter.com/2/users/by/username/{username}", 
             headers=self.header
             )
             data = json.loads(resp.text)
-            print(
-                resp.status_code,
-                data
-                )
+            return data
+
         except Exception as errorcode:
             raise errorcode
 
     def get_users(
         self,
         *usernames: str
-        ) -> None:
-        """Gets users by usernames
+        ) -> str:
+        """
+        Gets users by usernames.
+
         Parameters
         ----------
         usernames: :class: `str`
         """
         if "@" in usernames:
             raise Exception("Must be the username only")
+
         try:
-            newids = ",".join(usernames)
+            new_ids = ",".join(usernames)
             resp = requests.get(
-                f"https://api.twitter.com/2/users/by/username/{newids}", 
+                f"https://api.twitter.com/2/users/by/username/{new_ids}", 
             headers=self.header
             )
             data = json.loads(resp.text)
-            print(
-                resp.status_code,
-                data
-                )
+            return data
+
         except Exception as errorcode:
             raise errorcode
 
@@ -92,49 +93,49 @@ class Client:
     def get_tweet(
         self,
         id: int
-        ) -> None:
-        """Gets a tweet by id
+        ) -> str:
+        """
+        Gets a tweet by ID.
+
         Parameters
         ----------
         id: :class: `int`
         """
-        if isinstance(
-            id,
-            str
-            ):
-            raise Exception("id must be an int not a string")
+        if not isinstance(id, int):
+            raise Exception(f"id must be an int, not a {type(id).__name__}")
+
         try:
             resp = requests.get(
                 f"https://api.twitter.com/2/tweets?ids={id}",
                 headers=self.header
                 )
             data = json.loads(resp.text)
-            print(
-                resp.status_code,
-                data
-                )
+
+            return data
+
         except Exception as errorcode:
             raise errorcode
 
     def get_tweets(
         self,
-    *ids: int
-    ) -> None:
-        """Gets tweets by ids
+        *ids: int
+        ) -> str:
+        """
+        Gets tweets by IDs
+        
         Parameters
         ----------
         ids: :class: `int`
         """
         try:
-            newids = ",".join(ids)
+            new_ids = ",".join(ids)
             resp = requests.get(
-                f"https://api.twitter.com/2/tweets?ids={newids}", 
+                f"https://api.twitter.com/2/tweets?ids={new_ids}", 
                 headers=self.header
                 )
             data = json.loads(resp.text)
-            print(
-                resp.status_code,
-                data
-                )
+
+            return data
+
         except Exception as errorcode:
             raise errorcode
